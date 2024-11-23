@@ -1,22 +1,15 @@
 from fastapi import FastAPI , HTTPException , Depends, status
-from fastapi import Body
-from pydantic import BaseModel
-from typing import Optional
-from typing import Dict
+
+from typing import List
 from sqlalchemy.orm import Session
 
 from .database import engine , get_db
 
-from . import models
+from . import models , schema
 
 app = FastAPI()
 
-class resource_post (BaseModel):
-    post_id : Optional[int] = None
-    title : str
-    description : Optional[str] = None
-    http_link : str
-    # tags : dict = {} not_working
+
 
 
 @app.get("/")
@@ -24,7 +17,7 @@ def root():
     return { "message" : "working" }
 
 
-@app.get("/posts")
+@app.get("/posts" , response_model=List[schema.resource_post_response])
 def get_all_post(db : Session = Depends(get_db)):
     all_posts = db.query(models.resource).all()
     return all_posts
@@ -36,7 +29,7 @@ def tryIt(db: Session = Depends(get_db)):
     db.add(new_post)
     db.commit()
 
-@app.get("/posts/{id}")
+@app.get("/posts/{id}" , response_model=schema.resource_post_response)
 def get_post_with_id(id : int , db : Session = Depends(get_db)):
     post = db.query(models.resource).filter(models.resource.post_id == id).first()
     if not post:
@@ -45,8 +38,8 @@ def get_post_with_id(id : int , db : Session = Depends(get_db)):
     return post
 
 
-@app.post("/posts" , status_code=status.HTTP_201_CREATED)    
-def create_posts( post_body :resource_post , db : Session = Depends(get_db)):
+@app.post("/posts" , status_code=status.HTTP_201_CREATED , response_model=schema.resource_post_response)    
+def create_posts( post_body :schema.resource_post_create , db : Session = Depends(get_db)):
     new_post = models.resource(author_id=0,**post_body.model_dump())
     db.add(new_post)
     db.commit()
@@ -67,8 +60,8 @@ def delete_post(id : int , db : Session = Depends(get_db)):
     return None
     
 
-@app.put("/posts/{id}")
-def update_post(id : int, new_post_body : resource_post ,  db : Session = Depends(get_db)):
+@app.put("/posts/{id}" , response_model=schema.resource_post_response)
+def update_post(id : int, new_post_body : schema.resource_post_create ,  db : Session = Depends(get_db)):
     post_query = db.query(models.resource).filter(models.resource.post_id == id)
     post = post_query.first()
     to_add = new_post_body.model_dump()
