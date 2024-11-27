@@ -1,3 +1,4 @@
 .venv/*
-__pycache__/*
+__pycache__
 fcc_api_development.code-workspace
+.env
