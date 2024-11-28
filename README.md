@@ -7,10 +7,10 @@
   - [Manual Deployment](#manual-deployment)
 - [Todo](#todo)
 - [API Endpoints](#api-endpoints)
-  - [Authentication](#authentication)
-  - [Users](#users)
-  - [Posts](#posts)
-  - [Voting](#voting)
+  - [Authentication](#-authentication)
+  - [Users](#-users)
+  - [Posts](#-posts)
+  - [Voting](#-voting)
 
 ##  Tech Stack
 
@@ -33,7 +33,7 @@
 > **PLEASE DO REPLACE ENVIRONMENT VARIABLES**, `db_password` AND `secret` WITH A NEW PASSWORD in `.env` file and `./docker-compose.yaml`
 > You can try the command to generate.
 
-> ```bash
+```bash
 openssl rand -hex 100
 ```
 
