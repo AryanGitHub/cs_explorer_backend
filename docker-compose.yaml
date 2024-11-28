@@ -18,7 +18,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_PASSWORD=password123
+      - POSTGRES_PASSWORD=password123 # Please replace this default password.
       - POSTGRES_DB=cs_explorer_db
     volumes:
       - postgres_cs_explore_db_volume:/var/lib/postgresql/data

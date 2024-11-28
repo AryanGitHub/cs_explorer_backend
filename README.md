@@ -29,6 +29,13 @@
 
 # Deployment
 
+> **Note:**  
+> **PLEASE DO REPLACE ENVIRONMENT VARIABLES**, `db_password` AND `secret` WITH A NEW PASSWORD in `.env` file and `./docker-compose.yaml`
+> You can try the command to generate.
+
+> ```bash
+openssl rand -hex 100
+```
 
 #  Docker Deployment
 
