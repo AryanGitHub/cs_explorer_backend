@@ -13,8 +13,10 @@ class user_base(BaseModel):
     username : str 
     email : str
 
-class resource_post_create (resource_post_base):
-    pass
+class resource_post_create (BaseModel):
+    title : str
+    description : Optional[str] = None
+    http_link : str
 
 class resource_post_response (resource_post_base):
     created_at : datetime
